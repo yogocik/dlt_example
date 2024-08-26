@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+google-cloud-secret-manager = "*"
+python-dotenv = "*"
+dbt = "*"
+sqlalchemy = "*"
+pydantic = "*"
+psycopg2-binary = "*"
+dlt = {extras = ["sql_database"], version = "*"}
+pyarrow = "*"
+ipykernel = "*"
+
+[dev-packages]
+ipykernel = "*"
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.0"

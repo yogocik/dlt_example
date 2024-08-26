@@ -1,0 +1,8 @@
+[destination.biquery]
+location="Jakarta"
+http_timeout=15.0
+file_upload_timeout=1800.0
+retry_deadline=60.0
+
+[runtime]
+log_level="DEBUG"
