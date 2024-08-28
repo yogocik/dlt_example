@@ -1,0 +1,132 @@
+version: 2
+version_hash: Vec3o6ie97TTfSCHk4X3A7JftcVMLAeWG2cEYt9/Njs=
+engine_version: 9
+name: pre_nesting_source_pg_to_bq
+tables:
+  _dlt_version:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: false
+      schema:
+        data_type: text
+        nullable: false
+    write_disposition: skip
+    description: Created by DLT. Tracks schema updates
+  _dlt_loads:
+    columns:
+      load_id:
+        data_type: text
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: true
+      status:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_version_hash:
+        data_type: text
+        nullable: true
+    write_disposition: skip
+    description: Created by DLT. Tracks completed loads
+  order_trx_nested:
+    columns:
+      payload:
+        data_type: text
+        nullable: false
+        description: Contains data paylod in JSON dumps
+      order_id:
+        data_type: bigint
+        nullable: false
+        description: Primary Key (Serial-Generated Incremented)
+        primary_key: true
+        unique: true
+        cluster: true
+      processed_at:
+        data_type: timestamp
+        nullable: false
+        description: Processing time in extraction phase (UTC)
+        partition: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+    write_disposition: append
+    schema_contract: evolve
+    x-normalizer:
+      max_nesting: 0
+      seen-data: true
+    resource: order_history
+  _dlt_pipeline_state:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      pipeline_name:
+        data_type: text
+        nullable: false
+      state:
+        data_type: text
+        nullable: false
+      created_at:
+        data_type: timestamp
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+    write_disposition: append
+    file_format: preferred
+    x-normalizer:
+      seen-data: true
+settings:
+  detections:
+  - iso_timestamp
+  default_hints:
+    not_null:
+    - _dlt_id
+    - _dlt_root_id
+    - _dlt_parent_id
+    - _dlt_list_idx
+    - _dlt_load_id
+    foreign_key:
+    - _dlt_parent_id
+    root_key:
+    - _dlt_root_id
+    unique:
+    - _dlt_id
+  schema_contract: evolve
+normalizers:
+  names: snake_case
+  json:
+    module: dlt.common.normalizers.json.relational
+previous_hashes:
+- M7X7k5seSuZQnQqYYlmEkvsD+6BTwh4WMWgukouh5Jw=
+- dLO9Rm2tTmmo4N4MU2DqcDbFigCJM6YxsfxZ86z6Dgg=

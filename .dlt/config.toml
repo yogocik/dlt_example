@@ -1,8 +1,16 @@
-[destination.biquery]
-location="Jakarta"
-http_timeout=15.0
-file_upload_timeout=1800.0
-retry_deadline=60.0
-
 [runtime]
-log_level="DEBUG"
+log_level="INFO"
+
+[destination.filesystem]
+bucket_url = "gs://my_internal_bucket"
+
+[data_writer]
+buffer_max_items=1000
+
+
+[load]
+delete_completed_jobs=true
+
+# set buffers in normalize stage
+[normalize.data_writer]
+buffer_max_items=1000

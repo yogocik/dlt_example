@@ -1,0 +1,134 @@
+version: 6
+version_hash: Mg4JTYoX2cGlV+i7XA/AVCUl9R3regh4mRO62azI85k=
+engine_version: 9
+name: load_many_data_from_pg
+tables:
+  _dlt_version:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: false
+      schema:
+        data_type: text
+        nullable: false
+    write_disposition: skip
+    description: Created by DLT. Tracks schema updates
+  _dlt_loads:
+    columns:
+      load_id:
+        data_type: text
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: true
+      status:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_version_hash:
+        data_type: text
+        nullable: true
+    write_disposition: skip
+    description: Created by DLT. Tracks completed loads
+  _dlt_pipeline_state:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      pipeline_name:
+        data_type: text
+        nullable: false
+      state:
+        data_type: text
+        nullable: false
+      created_at:
+        data_type: timestamp
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+    write_disposition: append
+    file_format: preferred
+    x-normalizer:
+      seen-data: true
+  order_trx_nested:
+    columns:
+      payload:
+        data_type: text
+        nullable: false
+        description: Contains data paylod in JSON dumps
+      order_id:
+        data_type: bigint
+        nullable: false
+        description: Primary Key (Serial-Generated Incremented)
+        primary_key: true
+        unique: true
+        cluster: true
+      processed_at:
+        data_type: timestamp
+        nullable: false
+        description: Processing time in extraction phase (UTC)
+        partition: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+    write_disposition: append
+    schema_contract: evolve
+    x-normalizer:
+      max_nesting: 0
+      seen-data: true
+    resource: order_history
+settings:
+  detections:
+  - iso_timestamp
+  default_hints:
+    not_null:
+    - _dlt_id
+    - _dlt_root_id
+    - _dlt_parent_id
+    - _dlt_list_idx
+    - _dlt_load_id
+    foreign_key:
+    - _dlt_parent_id
+    root_key:
+    - _dlt_root_id
+    unique:
+    - _dlt_id
+  schema_contract: evolve
+normalizers:
+  names: snake_case
+  json:
+    module: dlt.common.normalizers.json.relational
+previous_hashes:
+- CHSY9huy3HsE/GxTErGMjO4fSwc07OC0Z+UbyR/UpL4=
+- Mg4JTYoX2cGlV+i7XA/AVCUl9R3regh4mRO62azI85k=
+- y5M9RpQQb0ZFkk/qxKRyelN+208qqZ4QFDgybf7+0Gc=
+- YSLiejR9NlDiUYWbYbtZQMZuRFjw9uuXWf3aZxKXLgQ=

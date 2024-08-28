@@ -10,13 +10,18 @@ dbt = "*"
 sqlalchemy = "*"
 pydantic = "*"
 psycopg2-binary = "*"
-dlt = {extras = ["sql_database"], version = "*"}
 pyarrow = "*"
 ipykernel = "*"
+google-cloud-bigquery-storage = "*"
+tqdm = "*"
+dlt = {version = "*", extras = ["filesystem"]}
+mimesis = "*"
+pandas = "*"
+pytz = "*"
 
 [dev-packages]
 ipykernel = "*"
 
 [requires]
 python_version = "3.12"
-python_full_version = "3.12.0"
+python_full_version = "3.12.2"
